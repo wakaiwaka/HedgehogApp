@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>560701556565-iceg37s8kr9ca46jbpnle23omvpjfd1d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.560701556565-iceg37s8kr9ca46jbpnle23omvpjfd1d</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMa_1OBB_O8HpuDpQ1_wJFqszli7nUMss</string>
+	<key>GCM_SENDER_ID</key>
+	<string>560701556565</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>wakkamassa.HedgehogApp</string>
+	<key>PROJECT_ID</key>
+	<string>hedgehogapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hedgehogapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:560701556565:ios:4424f9caf7894cf4</string>
+	<key>DATABASE_URL</key>
+	<string>https://hedgehogapp.firebaseio.com</string>
+</dict>
+</plist>

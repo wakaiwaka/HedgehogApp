@@ -1,0 +1,6 @@
+framework module Pods_HedgehogAppTests {
+  umbrella header "Pods-HedgehogAppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
