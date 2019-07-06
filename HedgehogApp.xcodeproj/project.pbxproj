@@ -21,6 +21,7 @@
 		6303272F2217B7520060293B /* RunnyNoseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6303272D2217B7520060293B /* RunnyNoseTableViewCell.swift */; };
 		630327302217B7520060293B /* RunnyNoseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6303272E2217B7520060293B /* RunnyNoseTableViewCell.xib */; };
 		63032733221D78C20060293B /*  DailyHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63032732221D78C20060293B /*  DailyHealth.swift */; };
+		63139C5822C3C2D700B1632F /* CloudFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63139C5722C3C2D700B1632F /* CloudFirestore.swift */; };
 		631EA4D721FCE10B009A5FB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EA4D621FCE10B009A5FB4 /* AppDelegate.swift */; };
 		631EA4DC21FCE10B009A5FB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 631EA4DA21FCE10B009A5FB4 /* Main.storyboard */; };
 		631EA4DE21FCE10E009A5FB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 631EA4DD21FCE10E009A5FB4 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		6303272D2217B7520060293B /* RunnyNoseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnyNoseTableViewCell.swift; sourceTree = "<group>"; };
 		6303272E2217B7520060293B /* RunnyNoseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RunnyNoseTableViewCell.xib; sourceTree = "<group>"; };
 		63032732221D78C20060293B /*  DailyHealth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " DailyHealth.swift"; sourceTree = "<group>"; };
+		63139C5722C3C2D700B1632F /* CloudFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFirestore.swift; sourceTree = "<group>"; };
 		631EA4D321FCE10B009A5FB4 /* HedgehogApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HedgehogApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		631EA4D621FCE10B009A5FB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		631EA4DB21FCE10B009A5FB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,9 +149,26 @@
 		63032731221D78430060293B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				63032732221D78C20060293B /*  DailyHealth.swift */,
+				63139C5422C3C29800B1632F /* DataStore */,
+				63139C5322C3BEC000B1632F /* Entity */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		63139C5322C3BEC000B1632F /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				63032732221D78C20060293B /*  DailyHealth.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		63139C5422C3C29800B1632F /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				63139C5722C3C2D700B1632F /* CloudFirestore.swift */,
+			);
+			path = DataStore;
 			sourceTree = "<group>";
 		};
 		631EA4CA21FCE10B009A5FB4 = {
@@ -390,21 +409,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		50BA930107BAC9358B0C8B69 /* [CP] Check Pods Manifest.lock */ = {
@@ -466,41 +480,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/CSS3ColorsSwift/CSS3ColorsSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/CalculateCalendarLogic/CalculateCalendarLogic.framework",
-				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSS3ColorsSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CalculateCalendarLogic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HedgehogApp/Pods-HedgehogApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -517,6 +506,7 @@
 				63032733221D78C20060293B /*  DailyHealth.swift in Sources */,
 				630327132216B5BC0060293B /* CalendarViewController.swift in Sources */,
 				630327152216C5A70060293B /* HealthManagementViewController.swift in Sources */,
+				63139C5822C3C2D700B1632F /* CloudFirestore.swift in Sources */,
 				631EA50821FD3C18009A5FB4 /* GoogleMapScreenViewController.swift in Sources */,
 				631EA4D721FCE10B009A5FB4 /* AppDelegate.swift in Sources */,
 				63032727221712330060293B /* UnchiColorTableViewCell.swift in Sources */,

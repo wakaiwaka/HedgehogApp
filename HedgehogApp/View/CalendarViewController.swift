@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 import FSCalendar
 import CSS3ColorsSwift
 import CalculateCalendarLogic
@@ -15,7 +14,6 @@ import CalculateCalendarLogic
 @available(iOS 10.0, *)
 class CalendarViewController: UIViewController ,FSCalendarDataSource,FSCalendarDelegate{
     
-    private let realm = try! Realm()
     @IBOutlet weak var calendar: FSCalendar!
     
     private lazy var dateFormatter:DateFormatter = {
@@ -82,7 +80,10 @@ class CalendarViewController: UIViewController ,FSCalendarDataSource,FSCalendarD
         formatter.timeStyle = .none
         formatter.locale = Locale(identifier: "ja_JP")
         
-        vc.todayDate = formatter.string(from: date)
+        let today = formatter.string(from: date)
+        var dailyHealth = DailyHealth(day: today, weight: "", clawCondition: false, unchiColor: false, givingFoodAmount: "", runnyNose: false, note: "")
+        
+        vc.dailyHealth = dailyHealth
         
         self.navigationController?.pushViewController(vc, animated: true)
         

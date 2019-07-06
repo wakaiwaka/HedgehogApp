@@ -7,16 +7,14 @@
 //
 
 import UIKit
-import RealmSwift
 import Firebase
 
 class HealthManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-    
-    public var todayDate:String?
+
+    private let firestore = CloudFirestore()
+    private let id:Int = 0
+    public var dailyHealth:DailyHealth!
     @IBOutlet weak var tableView: UITableView!
-    private var valueDic:[String:Any] = [:]
-    
-    private let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,73 +100,39 @@ class HealthManagementViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     @IBAction func saveHealthData(_ sender: UIBarButtonItem) {
-        
-        guard let weight = self.valueDic["weight"] else {
-            return
-        }
-        guard let givingFood = self.valueDic["givingFood"] else {
-            return
-        }
-        guard let clawCondition = self.valueDic["clowCondition"] else {
-            return
-        }
-        guard let unchiColor = self.valueDic["unchiColor"] else {
-            return
-        }
-        
-        guard let runnyNose = self.valueDic["runnyNose"] else{
-            return
-        }
-        
-        guard let note = self.valueDic["note"] else {
-            return
-        }
-        
-        guard let todayDate = self.todayDate else {
-            return
-        }
-        
-        //FIRESTOREにデータを保存する
-        db.collection("todos").document(todayDate).setData(["weight" : weight,"givingoFood" : givingFood,"clowCondition" : clawCondition,"unchiColor" : unchiColor, "runnyNose" :  runnyNose, "note" : note], merge: true) { err in
-            if err != nil{
-                return print("FIRESTORE_UPDATE_TODOS_ERROR")
-            }else{
-                return print("FIRESTORE_UPDATE_TODOS_SUCCESS")
-            }
-        }
+        self.firestore.createHealth(id: id, dailyHealth: self.dailyHealth)
     }
-    
 }
 
 extension HealthManagementViewController: InputTextTableCellDelegate,GivingFoodTableViewCellDelegate,ClawConditionTableViewCellDelegate,UnchiColorTableViewCellDelegate,RunnyNoseTableViewCellDelegate,NoteTableViewCellDelegate{
     
     func weightTextFieldDidEndEditing(value: String) {
-        self.valueDic.updateValue(value, forKey: "weight")
-        print(self.valueDic["weight"]!)
+        self.dailyHealth.weight = value
+        print(self.dailyHealth.weight)
     }
     
     func foodTextFieldDidEndEditing(value: String) {
-        self.valueDic.updateValue(value, forKey: "givingFood")
-        print(self.valueDic["givingFood"]!)
+        self.dailyHealth.givingFoodAmount = value
+        print(self.dailyHealth.givingFoodAmount)
     }
     
     func clawButtonDidEndTapped(isDone: Bool) {
-        self.valueDic.updateValue(isDone, forKey: "clawCondition")
-        print(self.valueDic["clawCondition"]!)
+        self.dailyHealth.clawCondition = isDone
+        print(self.dailyHealth.clawCondition)
     }
     
     func unchiButtonDidEndTapped(isDone: Bool) {
-        self.valueDic.updateValue(isDone, forKey: "unchiColor")
-        print(self.valueDic["unchiColor"]!)
+        self.dailyHealth.unchiColor = isDone
+        print(self.dailyHealth.unchiColor)
     }
     
     func noseButtonDidEndTapped(isDone: Bool) {
-        self.valueDic.updateValue(isDone, forKey: "runnyNose")
-        print(valueDic["runnyNose"]!)
+        self.dailyHealth.runnyNose = isDone
+        print(self.dailyHealth.runnyNose)
     }
     
     func noteTextFieldDidEndEditing(value: String) {
-        self.valueDic.updateValue(value, forKey: "note")
-        print(valueDic["note"]!)
+        self.dailyHealth.note = value
+        print(self.dailyHealth.note)
     }
 }
