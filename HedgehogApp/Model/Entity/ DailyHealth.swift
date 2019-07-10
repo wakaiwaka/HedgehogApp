@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CodableFirebase
 
 struct DailyHealth:Codable {
     var day:String
