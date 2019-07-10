@@ -29,6 +29,10 @@ class NoteTableViewCell: UITableViewCell ,UITextFieldDelegate{
         // Configure the view for the selected state
     }
     
+    func setCell(text:String){
+        self.noteTextField.text = text
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

@@ -18,11 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let GoogleMapsAPIKey = "AIzaSyApfoXT_y5C8l64fZptkc_a3lbev49x2tE"
     
-
+    
+    override init() {
+        super.init()
+        FirebaseApp.configure()
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FirebaseApp.configure()
-        let db = Firestore.firestore()
         GMSServices.provideAPIKey(self.GoogleMapsAPIKey)
         GMSPlacesClient.provideAPIKey(self.GoogleMapsAPIKey)
         return true

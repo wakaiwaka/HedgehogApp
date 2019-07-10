@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 
 class HealthManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-
+    
     private let firestore = CloudFirestore()
-    private let id:Int = 0
     public var dailyHealth:DailyHealth!
+    public var userId:String?
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -55,38 +55,41 @@ class HealthManagementViewController: UIViewController,UITableViewDataSource,UIT
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "weight", for: indexPath) as! WeightTableViewCell
             cell.selectionStyle = .none
             cell.layoutIfNeeded()
+            cell.weightTextField.text = self.dailyHealth?.weight
             cell.delegate = self
             return cell
         case 1:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "claw", for: indexPath) as! ClawConditionTableViewCell
             cell.layoutIfNeeded()
             cell.selectionStyle = .none
-            cell.setCell(clawCondition: false)
+            cell.setCell(clawCondition: self.dailyHealth!.clawCondition)
             cell.delegate = self
             return cell
         case 2:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "unchi", for: indexPath) as! UnchiColorTableViewCell
             cell.layoutIfNeeded()
             cell.selectionStyle = .none
-            cell.setCell(unchiCondition: false)
             cell.delegate = self
+            cell.setCell(unchiCondition: self.dailyHealth!.unchiColor)
             return cell
         case 3:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "runnyNose", for: indexPath) as! RunnyNoseTableViewCell
             cell.layoutIfNeeded()
             cell.selectionStyle = .none
-            cell.setCell(runnyNose: false)
+            cell.setCell(runnyNose: self.dailyHealth!.runnyNose)
             cell.delegate = self
             return cell
         case 4:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "giving", for: indexPath) as! GivingFoodTableViewCell
             cell.layoutIfNeeded()
             cell.selectionStyle = .none
+            cell.givingFoodTextLabel.text = self.dailyHealth?.givingFoodAmount
             cell.delegate = self
             return cell
         case 5:
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "note", for: indexPath) as! NoteTableViewCell
             cell.selectionStyle = .none
+            cell.noteTextField.text = self.dailyHealth?.note
             cell.delegate = self
             return cell
         default:
@@ -100,39 +103,39 @@ class HealthManagementViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     @IBAction func saveHealthData(_ sender: UIBarButtonItem) {
-        self.firestore.createHealth(id: id, dailyHealth: self.dailyHealth)
+        self.firestore.createHealth(id: userId, dailyHealth: self.dailyHealth)
     }
 }
 
 extension HealthManagementViewController: InputTextTableCellDelegate,GivingFoodTableViewCellDelegate,ClawConditionTableViewCellDelegate,UnchiColorTableViewCellDelegate,RunnyNoseTableViewCellDelegate,NoteTableViewCellDelegate{
     
     func weightTextFieldDidEndEditing(value: String) {
-        self.dailyHealth.weight = value
-        print(self.dailyHealth.weight)
+        self.dailyHealth?.weight = value
+        print(self.dailyHealth!.weight)
     }
     
     func foodTextFieldDidEndEditing(value: String) {
-        self.dailyHealth.givingFoodAmount = value
-        print(self.dailyHealth.givingFoodAmount)
+        self.dailyHealth?.givingFoodAmount = value
+        print(self.dailyHealth!.givingFoodAmount)
     }
     
     func clawButtonDidEndTapped(isDone: Bool) {
-        self.dailyHealth.clawCondition = isDone
-        print(self.dailyHealth.clawCondition)
+        self.dailyHealth?.clawCondition = isDone
+        print(self.dailyHealth!.clawCondition)
     }
     
     func unchiButtonDidEndTapped(isDone: Bool) {
-        self.dailyHealth.unchiColor = isDone
-        print(self.dailyHealth.unchiColor)
+        self.dailyHealth?.unchiColor = isDone
+        print(self.dailyHealth!.unchiColor)
     }
     
     func noseButtonDidEndTapped(isDone: Bool) {
-        self.dailyHealth.runnyNose = isDone
-        print(self.dailyHealth.runnyNose)
+        self.dailyHealth?.runnyNose = isDone
+        print(self.dailyHealth!.runnyNose)
     }
     
     func noteTextFieldDidEndEditing(value: String) {
-        self.dailyHealth.note = value
-        print(self.dailyHealth.note)
+        self.dailyHealth?.note = value
+        print(self.dailyHealth?.note)
     }
 }

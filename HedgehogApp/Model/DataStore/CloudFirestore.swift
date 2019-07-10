@@ -15,16 +15,14 @@ class CloudFirestore{
     
     var defaultFirestore = Firestore.firestore()
     
-    func createHealth(id:Int?,dailyHealth:DailyHealth?){
+    func createHealth(id:String?,dailyHealth:DailyHealth?){
         guard let id = id ,let day = dailyHealth?.day else {
             return assertionFailure("idが入ってないけん落とすわ")
         }
         
-        let idString = String(id)
-        
         let docData = try! FirestoreEncoder().encode(dailyHealth)
         
-        defaultFirestore.collection(idString).document(day).setData(docData, merge: true) { (error) in
+        defaultFirestore.collection(id).document(day).setData(docData, merge: true) { (error) in
             SVProgressHUD.show()
             if error != nil{
                 SVProgressHUD.showError(withStatus: "エラーが発生しました")
@@ -35,24 +33,21 @@ class CloudFirestore{
         }
     }
     
-    func getDailyHealth(id:Int?,date:Date?) -> DailyHealth?{
+    func getDailyHealth(id:String?,date:String?) -> DailyHealth!{
         
         guard let id = id ,let date = date else {
             assertionFailure("idが入ってないけん落とすわ")
             return nil
         }
         
-        let idString = String(id)
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        let dayString = formatter.string(from: date)
+        var dailyHealth:DailyHealth!
         
-        var dailyHealth:DailyHealth?
-        
-        defaultFirestore.collection(idString).document(dayString).getDocument { (document, error) in
-            if let document = document {
-                dailyHealth = try! FirestoreDecoder().decode(DailyHealth.self, from: document.data()!)
+        defaultFirestore.collection(id).document(date).getDocument { (document, error) in
+            if error != nil{
+                return
+            }
+            if let document = document?.data() {
+                dailyHealth = try! FirestoreDecoder().decode(DailyHealth.self, from: document)
             } else {
                 print("Document does not exist")
             }

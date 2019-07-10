@@ -31,6 +31,10 @@ class GivingFoodTableViewCell: UITableViewCell,UITextFieldDelegate {
         // Configure the view for the selected state
     }
     
+    func setCell(text:String){
+        self.givingFoodTextLabel.text = text
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

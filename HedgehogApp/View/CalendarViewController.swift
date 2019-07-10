@@ -8,6 +8,7 @@
 
 import UIKit
 import FSCalendar
+import Firebase
 import CSS3ColorsSwift
 import CalculateCalendarLogic
 
@@ -15,6 +16,10 @@ import CalculateCalendarLogic
 class CalendarViewController: UIViewController ,FSCalendarDataSource,FSCalendarDelegate{
     
     @IBOutlet weak var calendar: FSCalendar!
+    let userDefaults = UserDefaults.standard
+    private let firestore = CloudFirestore()
+    
+    private var userId:String? = ""
     
     private lazy var dateFormatter:DateFormatter = {
         let formatter = DateFormatter()
@@ -25,6 +30,14 @@ class CalendarViewController: UIViewController ,FSCalendarDataSource,FSCalendarD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userIdString = userDefaults.object(forKey: "userId") as? String
+        if let userId = userIdString{
+            self.userId = userId
+        }else{
+            let userIdString:String = NSUUID().uuidString
+            self.userDefaults.set(userIdString, forKey: "userId")
+        }
+        
         calendar.dataSource = self
         calendar.delegate = self
         calendar.appearance.todayColor = UIColor.mediumAquamarine
@@ -76,21 +89,25 @@ class CalendarViewController: UIViewController ,FSCalendarDataSource,FSCalendarD
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "HealthManagementViewController") as! HealthManagementViewController
         
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        formatter.dateStyle = .long
         formatter.timeStyle = .none
         formatter.locale = Locale(identifier: "ja_JP")
         
         let today = formatter.string(from: date)
-        var dailyHealth = DailyHealth(day: today, weight: "", clawCondition: false, unchiColor: false, givingFoodAmount: "", runnyNose: false, note: "")
+        let dailyHealth = DailyHealth(day: today, weight: "", clawCondition: false, unchiColor: false, givingFoodAmount: "", runnyNose: false, note: "")
         
         vc.dailyHealth = dailyHealth
-        
+        vc.userId = self.userId
+        if let dailyHealth:DailyHealth = firestore.getDailyHealth(id: userId, date: today){
+            vc.dailyHealth = dailyHealth
+            print("-----------------\(dailyHealth)--------------")
+        }
+        print(dailyHealth)
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
         return [UIColor.orange]
     }
-
+    
 }
